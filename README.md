@@ -23,4 +23,4 @@ Take into consideration that, when using this library, you are bound by the [lic
 [license]: http://www.gnu.org/copyleft/lesser.html "LGPLv3"
 [documentation]: ./docs/html/index.html "Documentation"
 [Example.cs]: ./Example.cs "Example"
-[license file]: ./license "License"
+[license file]: ./LICENSE "License"
