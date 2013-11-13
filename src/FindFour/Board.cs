@@ -10,8 +10,8 @@ namespace FindFour {
      * Handles the find four board and it's players.
      */
     public class Board {
-        private int[,] positions; //< Two dimensional array of all the positions on the board.
-        private int[] columnCache; //< Column cache of the different columns for dropping, records the spaces taken in each column.
+        private readonly int[,] positions; //< Two dimensional array of all the positions on the board.
+        private readonly int[] columnCache; //< Column cache of the different columns for dropping, records the spaces taken in each column.
         private readonly int width; //< Width of the board.
         private readonly int height; //< Height of the board.
         private readonly int area; //< Area of the board.
@@ -103,6 +103,8 @@ namespace FindFour {
             if(w < 4 || h < 4) throw new Exceptions.BoardTooSmallException("The minimum allowed board size is 4x4.");
             width = w;
             height = h;
+            positions = new int[height, width];
+            columnCache = new int[width];
             area = w * h;
         }
 
@@ -116,8 +118,8 @@ namespace FindFour {
          */
         public void Start() {
             Active = true;
-            positions = new int[height, width];
-            columnCache = new int[width];
+            lock(positionLocker) System.Array.Clear(positions, 0, positions.Length);
+            lock(columnCacheLocker) System.Array.Clear(columnCache, 0, columnCache.Length);
             CurrentTurn = 1;
         }
 
@@ -191,7 +193,7 @@ namespace FindFour {
         public void Drop(int column) {
             if(column < 0 || column >= width) throw new Exceptions.InvalidColumnException("Column " + column + " does not exist on the board.");
             lock(columnCacheLocker) {
-                if(columnCache[column] + 1 == height) throw new Exceptions.ColumnFullException("Column " + column + " is full!");
+                if(columnCache[column] == height) throw new Exceptions.ColumnFullException("Column " + column + " is full!");
                 PlaceChip(column, columnCache[column]);
                 columnCache[column]++;
             }
