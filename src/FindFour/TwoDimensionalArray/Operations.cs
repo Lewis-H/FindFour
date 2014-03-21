@@ -72,13 +72,19 @@ namespace FindFour.TwoDimensionalArray {
             int width = array.GetLength(1);
             int height = array.GetLength(0);
             int gradient = direction == DiagonalDirection.TopRight ? 1 : -1;
-            System.Collections.Generic.List<T> line = new System.Collections.Generic.List<T>();
+            int length = System.Math.Min(width, (gradient == 1) ? ((intercept >= 0) ? height - intercept : height + intercept - 1) : ((intercept >= 0) ? intercept + 1 : 0));
+            T[] line = new T[length];
             int y = intercept;
-            for(int x = 0; x < width && y < height; y = gradient * x + intercept) {
-                if(x >= 0 && y >= 0) line.Add(array[y, x]);
-                x++;
-            }
-            return line.ToArray();
+            int i = 0;
+            if(length > 0)
+                for(int x = 0; x < width && y < height; y = gradient * x + intercept) {
+                    if(x >= 0 && y >= 0) {
+                        line[i] = array[y, x];
+                        i++;
+                    }
+                    x++;
+                }
+            return line;
         }
 
     }
