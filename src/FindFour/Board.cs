@@ -239,8 +239,10 @@ namespace FindFour {
          *  TRUE if a diagonal win has happened, FALSE if not.
          */
         private bool CheckDiagonals() {
-            foreach(DiagonalDirection direction in System.Enum.GetValues(typeof(DiagonalDirection)))
-                for(int c = 4 - width; c < height - 4 - 1; c++) if(ProcessLine(Operations.GetDiagonal<int>(positions, direction, c))) { return true; }
+            for(int c = 3; c < height + (width - 4); c++) if(ProcessLine(Operations.GetDiagonal<int>(positions, DiagonalDirection.BottomRight, c))) return true;
+            for(int c = 4 - width; c < height - 3; c++) if(ProcessLine(Operations.GetDiagonal<int>(positions, DiagonalDirection.TopRight, c))) return true;
+            //foreach(DiagonalDirection direction in System.Enum.GetValues(typeof(DiagonalDirection)))
+            //    for(int c = 4 - width; c < height - 4 - 1; c++) if(ProcessLine(Operations.GetDiagonal<int>(positions, direction, c))) { return true; }
             return false;
         }
 

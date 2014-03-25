@@ -69,20 +69,21 @@ namespace FindFour.TwoDimensionalArray {
          *  The specified diagonal as a 1 dimensional array.
          */
         public static T[] GetDiagonal<T>(T[,] array, DiagonalDirection direction, int intercept) {
-            int width = array.GetLength(1);
-            int height = array.GetLength(0);
+            int width = array.GetLength(1) - 1;
+            int height = array.GetLength(0) - 1;
             int gradient = direction == DiagonalDirection.TopRight ? 1 : -1;
-            int length = System.Math.Min(width, (gradient == 1) ? ((intercept >= 0) ? height - intercept : height + intercept - 1) : ((intercept >= 0) ? intercept + 1 : 0));
-            T[] line = new T[length];
             int y = intercept;
-            int i = 0;
+            int x = 0;
+            if(y > height) x = (height - intercept) / gradient;
+            if(y < 0) x = (0 - intercept) / gradient;
+            y = gradient * x + intercept;
+            int length = System.Math.Min(width - x + 1, (gradient == 1) ? height - y + 1 : y + 1);
+            T[] line = new T[length];
             if(length > 0)
-                for(int x = 0; x < width && y < height; y = gradient * x + intercept) {
-                    if(x >= 0 && y >= 0) {
-                        line[i] = array[y, x];
-                        i++;
-                    }
+                for(int i = 0; x >= 0 && x <= width && y >= 0 && y <= height; i++) {
+                    line[i] = array[y, x];
                     x++;
+                    y = (gradient * x) + intercept;
                 }
             return line;
         }
