@@ -264,7 +264,7 @@ namespace FindFour {
                 }else if(previous != 0 && previous == chip) {
                     streak++;
                 }else if(previous != chip) {
-                    streak = 0;
+                    streak = 1;
                 }
                 previous = chip;
                 if(streak >= 4) return true;
