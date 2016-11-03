@@ -32,8 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TwoDimensionalArray\DiagonalDirection.cs" />
-    <Compile Include="TwoDimensionalArray\Operations.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="GameDrawEventHandler.cs" />
     <Compile Include="GameWinEventHandler.cs" />
@@ -47,6 +45,7 @@
     <Compile Include="InvalidPositionException.cs" />
     <Compile Include="InvalidRowException.cs" />
     <Compile Include="PositionTakenException.cs" />
+    <Compile Include="ImpossibleSelectionException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
