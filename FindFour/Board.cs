@@ -41,9 +41,10 @@ namespace FindFour {
             if(w < 4 || h < 4) throw new FindFour.BoardTooSmallException("The minimum allowed board size is 4x4.");
             Width = w;
             Height = h;
-            positions = new int[Height, Width];
+            positions = new int[Width, Height];
             columnPlacements = new int[Width];
             Area = w * h;
+            CurrentTurn = 1;
         }
 
         public Board() : this(7, 6) {}
@@ -90,7 +91,7 @@ namespace FindFour {
                 foreach(int dy in differences) {
                     x1 = x + dx;
                     y1 = y + dy;
-                    if(x1 >= 0 && x1 < Width && y1 >= 0 && y1 < Height && (x != x1 || y != y1)) {
+                    if(x1 >= 0 && x1 < Width && y1 >= 0 && y1 < Height && (x != x1 || y != y1) && ((x1 - x == y1 - y) || x == x1 || y == y1)) {
                         int[] line = Select(x, y, x1, y1);
                         for(int i = 0; i < line.Length; i++) {
                             if(line[i] != CurrentTurn)
@@ -105,7 +106,7 @@ namespace FindFour {
         }
 
         private int[] Select(int x0, int y0, int x1, int y1) {
-            if(!(x1 - x0 == y1 - y0)) throw new ImpossibleSelectionException("Cannot select specified line.");
+            if(!(x1 - x0 == y1 - y0) && x0 != x1 && y0 != y1) throw new ImpossibleSelectionException("Cannot select specified line.");
             if(x0 < 0 || x0 >= Width) throw new InvalidPositionException("x0 out of range.");
             if(x1 < 0 || x1 >= Width) throw new InvalidPositionException("x1 out of range.");
             if(y0 < 0 || y0 >= Height) throw new InvalidPositionException("y0 out of range.");
