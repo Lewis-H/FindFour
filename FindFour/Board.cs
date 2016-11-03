@@ -110,14 +110,13 @@ namespace FindFour {
             if(x1 < 0 || x1 >= Width) throw new InvalidPositionException("x1 out of range.");
             if(y0 < 0 || y0 >= Height) throw new InvalidPositionException("y0 out of range.");
             if(y1 < 0 || y1 >= Height) throw new InvalidPositionException("y1 out of range.");
-            int x = x0, y = y0;
-            int[] line = new int[Math.Max(Math.Abs(x0 - x1), Math.Abs(y0 - y1)) + 1];
-            int i = 0,
+            int x = x0,
+                y = y0,
                dx = (x0 == x1 ? 0 : x0 < x1 ? 1 : -1),
                dy = (y0 == y1 ? 0 : y0 < y1 ? 1 : -1);
-            while(i < line.Length) {
+            int[] line = new int[Math.Max(Math.Abs(x0 - x1), Math.Abs(y0 - y1)) + 1];
+            for(int i = 0; i < line.Length; i++) {
                 line[i] = positions[x, y];
-                i++;
                 x += dx;
                 y += dy;
             }
