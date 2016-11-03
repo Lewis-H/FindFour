@@ -4,7 +4,6 @@
  * @license http://www.gnu.org/copyleft/lesser.html
  */
 
-using FindFour.TwoDimensionalArray;
 using System;
 
 namespace FindFour {
