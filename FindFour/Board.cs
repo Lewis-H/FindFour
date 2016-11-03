@@ -113,12 +113,9 @@ namespace FindFour {
             int x = x0, y = y0;
             int[] line = new int[Math.Max(Math.Abs(x0 - x1), Math.Abs(y0 - y1)) + 1];
             int i = 0,
-            dx = (x0 == x1 ? 0 : x0 < x1 ? 1 : -1),
-            dy = (y0 == y1 ? 0 : y0 < y1 ? 1 : -1);
-            Func<int, int, Func<int, int, bool>> f = (n0, n1) => (n0 == n1) ? new Func<int, int, bool>((p, p1) => true) : (n0 < n1) ? new Func<int, int, bool>((p, p1) => p <= p1) : new Func<int, int, bool>((p, p1) => p >= p1);
-            Func<int, int, bool> fx = f(x0, x1);
-            Func<int, int, bool> fy = f(y0, y1);
-            while(fx(x, x1) && fy(y, y1) && i < line.Length) {
+               dx = (x0 == x1 ? 0 : x0 < x1 ? 1 : -1),
+               dy = (y0 == y1 ? 0 : y0 < y1 ? 1 : -1);
+            while(i < line.Length) {
                 line[i] = positions[x, y];
                 i++;
                 x += dx;
