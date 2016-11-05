@@ -51,7 +51,7 @@ namespace FindFour {
 
         public int GetChip(int x, int y) {
             if(x >= Width || x < 0 || y >= Height || y < 0) throw new InvalidPositionException("The position (" + x + ", " + y + ") does not exist on the board.");
-            return positions[y, x];
+            return positions[x, y];
         }
 
         public bool IsEmpty(int x, int y) {
@@ -59,10 +59,11 @@ namespace FindFour {
         }
 
         private void PlaceChip(int x, int y) {
+            System.Console.WriteLine("({0}, {1})", x, y);
             if(IsEmpty(x, y) == false) throw new PositionTakenException("The position (" + x + ", " + y + ") is already taken by player " + GetChip(x, y) + ".");
             if(x >= Width || x < 0 || y >= Height || y < 0) throw new InvalidPositionException("The position (" + x + ", " + y + ") does not exist on the board.");
             if(OnPlace != null) OnPlace(x, y, CurrentTurn);
-            positions[y, x] = CurrentTurn;
+            positions[x, y] = CurrentTurn;
             Moves++;
             if(!CheckWin(x, y))
                 if(Moves == Area) {
@@ -78,8 +79,7 @@ namespace FindFour {
         public void Drop(int column) {
             if(column < 0 || column >= Width) throw new InvalidColumnException("Column " + column + " does not exist on the board.");
             if(columnPlacements[column] == Height) throw new ColumnFullException("Column " + column + " is full!");
-            PlaceChip(column, columnPlacements[column]);
-            columnPlacements[column]++;
+            PlaceChip(column, columnPlacements[column]++);
         }
 
         private bool CheckWin(int x, int y) {
